@@ -28,66 +28,73 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ppjata
  */
 @RestController
-@RequestMapping("/fastfurious")
+@RequestMapping("/FastFurious")
 public class ProdutoController {
     
-    @Autowired
-    private ProdutoService produtoService;
-    
-    @Autowired
-    private ProdutoRepository produtoRepository;
-    
-    
-     @GetMapping("/produto") 
-            public List<Produto> listas(){
-                return produtoRepository.findAll();
-            }
-    
-    @GetMapping("/produto/{id}")
-    public ResponseEntity<Produto> buscar (@PathVariable long id) {
-    
-        Optional<Produto> produto = produtoRepository.findById(id);
+      @Autowired
+      private ProdutoRepository produtoRepository;
+      
+      @Autowired
+      private ProdutoService produtoService;
+      
+     @GetMapping("/produto")
+      public List<Produto> listas(){
+          return produtoRepository.findAll();     
+  
+      }
+      
+   
+      @GetMapping("/produto/{id}")
+      public ResponseEntity<Produto> findById(@PathVariable Long id){
+          Optional<Produto> produto = produtoRepository.findById(id);
+          
+          if(produto.isPresent()){
+              return ResponseEntity.ok(produto.get());
+          } else{
+              return ResponseEntity.notFound().build();
+          }
+      }
+      
+      @DeleteMapping("/produto/{id}")
+      public ResponseEntity<Void> excluir(@PathVariable Long id) {
+          
+          if(!produtoRepository.existsById(id)){
+              return ResponseEntity.notFound().build();
+          } else {
+              produtoService.excluir(id);
+              return ResponseEntity.noContent().build();
+                      
+          }
+      }
+      
+      @PostMapping("/produto")
+      @ResponseStatus(HttpStatus.CREATED)
+      public Produto criar(@RequestBody Produto produto) {
+          return produtoRepository.save(produto);
+      
+      }
         
-        if (produto.isPresent()) {
-            return ResponseEntity.ok(produto.get());
-        }else {
-            return ResponseEntity.notFound().build();
-        }      
-    }
-     @PostMapping("/produto")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Produto criar(@RequestBody Produto produto) {
-        return produtoRepository.save(produto);
-    }
-    
-     @PutMapping("/produto/{id}")
-    public ResponseEntity<Produto> atualizar( @PathVariable Long id,
-                                             @RequestBody Produto produto) {
+        @PutMapping("/produto/{id}")
+        public ResponseEntity<Produto> atualizar (@PathVariable Long id,
+                                                  @RequestBody Produto produto) {
         
-        if(!produtoRepository.existsById(id)) {
+        if (!produtoRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
+            
         }
         
-       produto.setId(id);
-       produto = produtoService.salvar(produto);
+        
+        produto.setId(id);
+        produto = produtoService.salvar(produto);
         return ResponseEntity.ok(produto);
         
-    }
-     @DeleteMapping("/produto/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        }
         
-        if(!produtoRepository.existsById(id)) { 
-            return ResponseEntity.notFound().build();
-    }
-    
-   produtoService.excluir(id);
-    return ResponseEntity.noContent().build();
-}
-    
-    @GetMapping("/produto/categoria/{categoria}")
-    public List<Produto> findByCategoria(@PathVariable String categoria) {
+        @GetMapping("/produto/categoria/{categoria}")
+        public List<Produto> findByCategoria(@PathVariable String categoria) {
+                                                      
         return produtoService.findByCategoria(categoria);
-    
-    }
+        
+        }
+
 }
-   

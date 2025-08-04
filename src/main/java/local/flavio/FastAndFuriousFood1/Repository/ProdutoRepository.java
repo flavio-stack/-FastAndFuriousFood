@@ -7,13 +7,17 @@ package local.flavio.FastAndFuriousFood1.Repository;
 import java.util.List;
 import local.flavio.FastAndFuriousFood1.Entities.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author ppjata
  */
-public interface ProdutoRepository extends JpaRepository<Produto, Long>{
+@Repository
+public interface ProdutoRepository extends JpaRepository<Produto,Long> {
 
-    List<Produto> findByCategoria(String categoria);
+    public List<Produto> findByCategoria(String categoria);
+    
+  
     
 }

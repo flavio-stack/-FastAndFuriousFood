@@ -15,69 +15,72 @@ import jakarta.persistence.Id;
  */
 @Entity
 public class Produto {
-
+    
     @Id
     private long id;
     private String nome;
-    private double preco;
     private String categoria;
-    private String linkimagem;
-
+    private double preco;
+    private String linkImagem;
+    
     public Produto() {
+    
     }
 
-    public Produto(long id, String nome, double preco, String categoria, String linkimagem) {
+    public Produto(long id, String nome, String categoria, double preco, String linkImagem) {
         this.id = id;
         this.nome = nome;
-        this.preco = preco;
         this.categoria = categoria;
-        this.linkimagem = linkimagem;
+        this.preco = preco;
+        this.linkImagem = linkImagem;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
     }
 
     public String getCategoria() {
         return categoria;
     }
 
+    public double getPreco() {
+        return preco;
+    }
+
+    public String getLinkImagem() {
+        return linkImagem;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
-    public String getLinkimagem() {
-        return linkimagem;
+    public void setPreco(double preco) {
+        this.preco = preco;
     }
 
-    public void setLinkimagem(String linkimagem) {
-        this.linkimagem = linkimagem;
+    public void setLinkImagem(String linkImagem) {
+        this.linkImagem = linkImagem;
     }
+    
 
+    
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + (int) (this.id ^ (this.id >>> 32));
+        int hash = 3;
+        hash = 17 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
 
@@ -95,4 +98,8 @@ public class Produto {
         final Produto other = (Produto) obj;
         return this.id == other.id;
     }
+    
+    
+   
+    
 }

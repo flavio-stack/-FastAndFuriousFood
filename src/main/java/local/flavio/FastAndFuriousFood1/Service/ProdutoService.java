@@ -4,17 +4,12 @@
  */
 package local.flavio.FastAndFuriousFood1.Service;
 
+
 import java.util.List;
 import local.flavio.FastAndFuriousFood1.Entities.Produto;
 import local.flavio.FastAndFuriousFood1.Repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
-
-
-
-
 
 /**
  *
@@ -23,18 +18,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProdutoService {
 
-  @Autowired
-  private ProdutoRepository produtoRepository;
-  
-  public Produto salvar(Produto produto) {
-      
-      return produtoRepository.save(produto);
-  }
-  
-  public List<Produto> findByCategoria(String categoria) {
-      return produtoRepository.findByCategoria(categoria);
-  }
-          public void excluir(Long id ) {
-              produtoRepository.deleteById(id);
+    @Autowired
+    private ProdutoRepository produtoRepository;
+    
+    public void excluir(Long id) {
+        produtoRepository.deleteById(id);
+        
+        
     }
-  }
+
+    public Produto salvar(Produto produto) {
+            return produtoRepository.save(produto);
+    
+    }
+   
+
+    public List<Produto> findByCategoria(String categoria) {
+        return produtoRepository.findByCategoria(categoria);
+    }
+
+}
